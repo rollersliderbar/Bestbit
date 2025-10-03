@@ -193,7 +193,7 @@ const App = () => {
                                         style={{
                                             padding: '15px 25px',
                                             fontSize: '18px',
-                                            backgroundColor: '#ffd70',
+                                            backgroundColor: '#ffd700',
                                             border: '3px solid #ffaa00',
                                             fontWeight: 'bold'
                                     
