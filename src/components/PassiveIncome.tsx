@@ -1,13 +1,12 @@
-// FETURE 5: passive income / auto clicker componet
-// earn coinsz automatically over time lol
+// FEATURE 5: passive income / auto clicker component
+// earn coins automatically over time
 
 
 import React, { useState, useEffect } from 'react';
 
 
 
-
-//might need to tweak the timings and stuff
+//will need to tweak the timings later
 
 interface PassiveGenerator {
     id: number;
@@ -16,7 +15,6 @@ interface PassiveGenerator {
     cost: number;
     coins_per_second: number;
     owned: number;
-    //icon?: string; add later maybe
 }
 
 interface PassiveIncomeProps {
@@ -37,44 +35,38 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
     console.log("PassiveIncome component loaded");
     
     const [generators, setGenerators] = useState<PassiveGenerator[]>([
-
-
-
         {
             id: 1,
-            name: "Coin Finder",
-            description: "Finds 0.5 coins per second",
+            name: "Apprentice Miner",
+            description: "Hire a novice to mine 0.5 coins per second",
             cost: 30,
             coins_per_second: 0.5,
             owned: 0
         },
         {
             id: 2,
-            name: "Lucky Charm",
-            description: "Generates 2 coins per second",
+            name: "Lucky Talisman",
+            description: "Ancient charm that generates 2 coins per second",
             cost: 100,
             coins_per_second: 2,
             owned: 0
         },
         {
             id: 3,
-            name: "Coin Machine",
-            description: "Produces 5 coins per second",
+            name: "Coin Forge",
+            description: "Mystical forge producing 5 coins per second",
             cost: 500,
             coins_per_second: 5,
             owned: 0
         },
         {
             id: 4,
-            name: "Magic Wallet",
-            description: "Makes 15 coins per second (op af)",
+            name: "Dragon's Hoard",
+            description: "Legendary treasure generating 15 coins per second",
             cost: 2000,
             coins_per_second: 15,
             owned: 0
         }
-
-
-
     ]);
 
     const [panel_open, setPanelOpen] = useState(true);
@@ -82,7 +74,7 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 
 
 
-    // calcualte total coins pr second
+    // calculate total coins per second
     useEffect(() => {
         console.log("recalculating passive income...");
         
@@ -97,7 +89,7 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 
 
 
-    // pasive income tick every second
+    // passive income tick every second
     useEffect(() => {
         if (total_coins_per_sec <= 0) {
             console.log("no passive income yet");
@@ -109,7 +101,7 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
         const interval = setInterval(() => {
             console.log("passive income tick:", total_coins_per_sec);
             onPassiveEarnings(total_coins_per_sec);
-        }, 1000); 
+        }, 1000);
 
         return () => {
             console.log("clearing passive income interval");
@@ -126,9 +118,8 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 
 
         // afford check
-
         if (coin_count < generator.cost) {
-            console.log("cant afford this generator");
+            console.log("cannot afford this generator");
             alert("Not enough coins! Need " + generator.cost + " coins");
             return;
         }
@@ -145,9 +136,9 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
         // update owned count
         setGenerators(prevGens => 
             prevGens.map(g => {
-                if (g.id===generator.id) {
+                if (g.id === generator.id) {
                     const new_owned = g.owned + 1;
-                    const new_cost = Math.floor(g.cost * 1.3); // 30% increase
+                    const new_cost = Math.floor(g.cost * 1.3);
                     
                     console.log("generator owned:", g.owned, "->", new_owned);
                     
@@ -161,29 +152,19 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
             })
         );
 
-        console.log("generator purchased!!");
+        console.log("generator purchased!");
     };
 
 
 
 
     return (
-        <div className="passive-income-panel" style={{
-            border: '2px solid #9b59b6',
-            padding: '15px',
-            margin: '20px 0',
-            backgroundColor: '#f5f0ff',
-            borderRadius: '8px'
-        }}>
+        <div className="passive-income-panel">
             <div className="passive-header">
-                <h3>Passive Income 💰</h3>
+                <h3 className="section-title">Automated Gold Mines</h3>
                 <button 
                     onClick={() => setPanelOpen(!panel_open)}
-                    style={{ 
-                        fontSize: '12px',
-                        padding: '5px 10px',
-                        marginLeft: '10px'
-                    }}
+                    className="toggle-btn"
                 >
                     {panel_open ? 'Hide' : 'Show'}
                 </button>
@@ -193,18 +174,12 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 
 
 
-
             {panel_open && (
                 <div className="passive-content">
-                    <div style={{ 
-                        marginBottom: '15px', 
-                        padding: '10px',
-                        backgroundColor: '#e8d4ff',
-                        borderRadius: '5px'
-                    }}>
-                        <p style={{ margin: '0', fontSize: '14px', fontWeight: 'bold' }}>
-                            Total Income: <span style={{ color: '#9b59b6' }}>
-                                {total_coins_per_sec.toFixed(1)} coins/sec
+                    <div className="passive-income-display">
+                        <p className="income-rate">
+                            Empire Production: <span className="income-value">
+                                {total_coins_per_sec.toFixed(1)} gold/sec
                             </span>
                         </p>
                     </div>
@@ -217,51 +192,26 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
                                 <div 
                                     key={generator.id}
                                     className="generator-item"
-                                    style={{
-                                        border: '1px solid #ddd',
-                                        padding: '12px',
-                                        margin: '8px 0',
-                                        borderRadius: '5px',
-                                        backgroundColor: '#fff'
-                                    }}
                                 >
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        justifyContent: 'space-between', 
-                                        alignItems: 'center' 
-                                    }}>
-                                        <div style={{ flex: 1 }}>
-                                            <h4 style={{ margin: '0 0 5px 0' }}>
+                                    <div className="generator-content">
+                                        <div className="generator-info">
+                                            <h4 className="generator-item-title">
                                                 {generator.name}
                                                 {generator.owned > 0 && (
-                                                    <span style={{ 
-                                                        fontSize: '12px', 
-                                                        color: '#9b59b6', 
-                                                        marginLeft: '8px',
-                                                        fontWeight: 'bold'
-                                                    }}>
+                                                    <span className="generator-owned">
                                                         x{generator.owned}
                                                     </span>
                                                 )}
                                             </h4>
-                                            <p style={{ margin: '0 0 5px 0', fontSize: '13px' }}>
+                                            <p className="generator-item-description">
                                                 {generator.description}
                                             </p>
-                                            <p style={{ 
-                                                margin: '0',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold',
-                                                color: can_afford ? '#27ae60' : '#e74c3c'
-                                            }}>
-                                                Cost: {generator.cost} 🪙
+                                            <p className={`generator-cost ${can_afford ? 'affordable' : 'expensive'}`}>
+                                                Cost: {generator.cost.toLocaleString()} coins
                                             </p>
                                             {generator.owned > 0 && (
-                                                <p style={{ 
-                                                    margin: '3px 0 0 0',
-                                                    fontSize: '11px',
-                                                    color: '#7f8c8d'
-                                                }}>
-                                                    Earning: {(generator.coins_per_second * generator.owned).toFixed(1)}/sec
+                                                <p className="generator-earnings">
+                                                    Production: {(generator.coins_per_second * generator.owned).toFixed(1)}/sec
                                                 </p>
                                             )}
                                         </div>
@@ -269,16 +219,7 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
                                         <button
                                             onClick={() => handleBuyGeneratorWithChecks(generator)}
                                             disabled={!can_afford}
-                                            style={{
-                                                padding: '8px 16px',
-                                                backgroundColor: can_afford ? '#9b59b6' : '#bdc3c7',
-                                                color: 'white',
-                                                border: 'none',
-                                                borderRadius: '4px',
-                                                cursor: can_afford ? 'pointer' : 'not-allowed',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold'
-                                            }}
+                                            className="buy-btn"
                                         >
                                             Buy
                                         </button>
@@ -295,7 +236,7 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 
 
             {/* debug passive info */}
-            <p style={{ fontSize: '10px', color: 'gray', marginTop: '10px' }}>
+            <p className="debug-info">
                 Debug: total generators owned = {generators.reduce((sum, g) => sum + g.owned, 0)}
             </p>
         </div>

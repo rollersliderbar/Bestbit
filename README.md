@@ -1,71 +1,98 @@
-# React + TypeScript + Vite
+# Coin Quest Empire 🎮
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+yo wassup, this is my coin clicker game lol. made it with react and typescript cuz why not
 
-Currently, two official plugins are available:
+## what is this thing?
 
+Basically its a coin clicking game where u click to get coins and buy upgrades and stuff. pretty simple
 
-## React Compiler
+### Features and stuff
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Click to earn coins** - just click the button and watch ur coins go brrrr
+- **Quests system** - complete challenges to get bonus coins, got like 10 quests rn
+- **Upgrade shop** - buy upgrades to make ur clicks worth more coins per click
+- **Passive income generators** - buy these and they make coins for u automatically even when ur not clicking
+- **Save system** - ur progress gets auto-saved every 5 seconds so u dont lose anything when u reload
+- **Modern ui** - revamped the whole thing with glassmorphism and gradients, looks pretty sick ngl
+- **Cute review popup** - after 30 seconds a little star appears asking for a good review lol
 
-## Expanding the ESLint configuration
+## how to run this
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# install dependencies first
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# run the dev server
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# should open on localhost:5174 or something like that
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## tech stack i made it up on
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **react 19.1.1** - for the ui components and stuff
+- **typescript** - cuz types are cool i guess
+- **vite** - super fast build tool, love it
+- **localStorage** - for saving ur game progress locally
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## project structure
+
 ```
+src/
+  App.tsx              - main game logic, handles everything basically
+  App.css              - all the styling with gradients and animations
+  components/
+    QuestPanel.tsx     - quest system with 10 challenges
+    UpgradeShop.tsx    - upgrades for clicking power
+    PassiveIncome.tsx  - auto coin generators
+```
+
+## how it works
+
+1. enter ur name when u start
+2. click the "mine gold" button to earn coins
+3. complete quests for bonus rewards
+4. buy upgrades to make each click worth more
+5. buy generators for passive income
+6. watch ur empire grow lol
+
+
+
+## features breakdown
+
+### quest system
+got 10 quests with progressive difficulty:
+- starts at 10 coins, goes up to 10,000,000
+- rewards scale from 50 to 5,000,000 coins
+- auto-removes when u claim the reward
+
+### upgrade shop
+3 upgrade tiers:
+- bronze pickaxe - starter upgrade
+- golden touch - mid tier boost
+- master's technique - endgame power
+
+### passive income
+4 generator types:
+- apprentice miner - basic income
+- lucky talisman - better income
+- coin forge - even better
+- dragon's hoard - best passive income
+
+### save/load system
+- auto-saves every 5 seconds
+- saves to localStorage
+- loads automatically when u open the page
+- remembers ur name, coins, clicks, everything
+
+
+
+## license
+
+idk do whatever u want with it lol
+
+---
+
+made with ❤️ and lots of coffee ☕
+
+btw if u like this give it a good review pls : )

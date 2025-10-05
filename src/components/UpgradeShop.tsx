@@ -1,15 +1,13 @@
-//to up-grade shop componetn
+//upgrade shop component
 
 
 import React, { useState } from "react";
 
-//prob will  need balance adjustment later ig
+//will need balance adjustment later
 
 
 interface Upgrade {
     id: number;
-    // bro check what i found lmaoooo i was js writing number and saw this so cool id: DO_NOT_USE_OR_YOU_WILL_BE_FIRED_CALLBACK_REF_RETURN_VALUES
-
     name: string;
     description: string;
     cost: number;
@@ -19,13 +17,9 @@ interface Upgrade {
 }
 
 interface UpgradeShopProps {
-
     coin_count: number;
-    onPurchase: (cost: number, upgrade_id: number) => void;
-
+    onPurchase: (cost: number, upgrade_id: number, bonus_amount: number) => void;
     current_coin_per_click: number;
-
-
 }
 
 
@@ -45,8 +39,8 @@ const UpgradeShop: React.FC<UpgradeShopProps> = ({ coin_count, onPurchase, curre
 
         {
             id: 1,
-            name: "Better Coins",
-            description: "Collect 2 coins per click",
+            name: "Bronze Pickaxe",
+            description: "Upgrade your mining tool to earn 2 coins per click",
             cost: 20,
             level: 0,
             max_level: 1,
@@ -55,7 +49,7 @@ const UpgradeShop: React.FC<UpgradeShopProps> = ({ coin_count, onPurchase, curre
         {
             id: 2,
             name: "Golden Touch",
-            description: "+1 coin per click (can stack)",
+            description: "Enchant your hands with magic for +1 coin per click",
             cost: 50,
             level: 0,
             max_level: 5,
@@ -63,8 +57,8 @@ const UpgradeShop: React.FC<UpgradeShopProps> = ({ coin_count, onPurchase, curre
         },
         {
             id: 3,
-            name: "Mega Clicker",
-            description: "+3 coins per click (expensive af)",
+            name: "Master's Technique",
+            description: "Learn ancient mining secrets for +3 coins per click",
             cost: 200,
             level: 0,
             max_level: 3,
@@ -83,49 +77,40 @@ const UpgradeShop: React.FC<UpgradeShopProps> = ({ coin_count, onPurchase, curre
 
 
 
-        const handleUpgradePurchaseWithValidation = (upgrade: Upgrade) => {
-                   console.log("Tring to buy an upgrade: ", upgrade.name);
-                   
-                   
+    const handleUpgradePurchaseWithValidation = (upgrade: Upgrade) => {
+        console.log("Trying to buy upgrade: ", upgrade.name);
+        
+        
 
 
-
-                   //first sanity check with afford
-
-
-                   if(coin_count < upgrade.cost) {
-                    console.log("Not enough coins broski");
-                    alert("Not enough coins!!!! Need: " + upgrade.cost + " coins");
-
-            
-
-                            return;
-                            //check level
-
- }
-                   
-                                   if (upgrade.level >= upgrade.max_level) {
-                                          console.log("upgrade already maxed out");
-                                             alert("This upgrade is already maxed!");
-                                                 return;
+        //afford check
+        if(coin_count < upgrade.cost) {
+            console.log("Not enough coins");
+            alert("Not enough coins! Need: " + upgrade.cost + " coins");
+            return;
+        }
+        
+        //level check
+        if (upgrade.level >= upgrade.max_level) {
+            console.log("upgrade already maxed out");
+            alert("This upgrade is already maxed!");
+            return;
         }
 
 
 
-
-                           //buy pgrade
-
-                           console.log("purchasing upgrade........")
-                           onPurchase(upgrade.cost, upgrade.id);
+        //buy upgrade
+        console.log("purchasing upgrade...");
+        onPurchase(upgrade.cost, upgrade.id, upgrade.bonus_per_level);
 
 
 
-                            // update upgrade level
+        // update upgrade level
         setUpgrades(prevUpgrades => 
             prevUpgrades.map(u => {
                 if (u.id === upgrade.id) {
                     const new_level = u.level + 1;
-                    const new_cost = Math.floor(u.cost * 1.5); // cost increases by 50%
+                    const new_cost = Math.floor(u.cost * 1.5);
                     
                     console.log("upgrade level:", u.level, "->", new_level);
                     
@@ -146,104 +131,66 @@ const UpgradeShop: React.FC<UpgradeShopProps> = ({ coin_count, onPurchase, curre
 
 
     return (
+        <div className="upgrade-shop">
+            <div className="shop-header">
+                <h3 className="section-title">Upgrade Shop</h3>
+                <button 
+                    onClick={() => setShopOpen(!shop_open)}
+                    className="toggle-btn"
+                >
+                    {shop_open ? 'Hide' : 'Show'}
+                </button>
+            </div>
 
-        <div className="upgrade-shop" style={{
-            border: '2px solid #ff6b6b',
-            padding: "15px",
-            margin: '20px 0',
-            backgroundColor: '#FFF4F4',
-            borderRadius: '8px'
-        }}>
-                        <div className = "shop-content">
-
-                            <div className="shop-header">
-                                <h3>Upgrade Shop 🛒</h3>
-                                <button 
-                                    onClick={() => setShopOpen(!shop_open)}
-                                    style={{ 
-                                        fontSize: '12px',
-                                        padding: '5px 10px',
-                                        marginLeft: '10px'
-                                    }}
-                                >
-                                    {shop_open ? 'Hide' : 'Show'}
-                                </button>
-                            </div>
-
-                            {shop_open && (
-                                <>
+            {shop_open && (
+                <div className="shop-content">
+                    <p className="current-stats">
+                        Your Mining Power: <strong>{current_coin_per_click}</strong> gold per strike
+                    </p>
 
 
-                            <p style={{ fontSize: '13px', marginBottom: '10px', color: "#666"}}>
+                    <div className="upgrade-list">
+                        {
+                            upgrades.map(upgrade => {
+                                const can_afford = coin_count >= upgrade.cost;
+                                const is_maxed = upgrade.level >= upgrade.max_level;
 
-                                Current: <strong>{current_coin_per_click}</strong> coins per click
-                            </p>
+                                return (
+                                    <div 
+                                        key={upgrade.id}
+                                        className={`upgrade-item ${is_maxed ? 'maxed' : ''}`}
+                                    >
+                                        <div className="upgrade-content">
+                                            <div className="upgrade-info">
+                                                <h4 className="upgrade-item-title">
+                                                    {upgrade.name}
+                                                    <span className="upgrade-level">
+                                                        Level {upgrade.level}/{upgrade.max_level}
+                                                    </span>
+                                                </h4>
+                                                <p className="upgrade-item-description">
+                                                    {upgrade.description}
+                                                </p>
+                                                <p className={`upgrade-cost ${can_afford ? 'affordable' : 'expensive'}`}>
+                                                    Cost: {upgrade.cost.toLocaleString()} coins
+                                                </p>
+                                            </div>
 
-
-                            <div className="upgrade-list">
-                                {
-                                    upgrades.map(upgrade => {
-                                        const can_afford = coin_count >= upgrade.cost;
-                                        const is_maxed = upgrade.level >= upgrade.max_level;
-
-                                        return (
-                                            <div 
-                                                    key={upgrade.id}
-                                                    className="upgrade-item"
-                                                    style={{
-                                                        border: '1px solid #fff',
-                                                        padding: '12px',
-                                                        margin: '8px 0',
-                                                        borderRadius: '5px',
-                                                        backgroundColor: is_maxed ? '#f0f0f0' : '#fff',
-                                                        opacity: is_maxed ? 0.6 : 1
-                                                    }}
-                                                    >
-
-<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <div>
-                                            <h4 style={{ margin: '0 0 5px 0' }}>
-                                                {upgrade.name} 
-                                                <span style={{ fontSize: '12px', color: '#888', marginLeft: '8px' }}>
-                                                    Lv. {upgrade.level}/{upgrade.max_level}
-                                                </span>
-                                            </h4>
-                                            <p style={{ margin: '0 0 5px 0', fontSize: '13px' }}>
-                                                {upgrade.description}
-                                            </p>
-                                            <p style={{ 
-                                                margin: '0',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold',
-                                                color: can_afford ? '#2ecc71' : '#e74c3c'
-                                            }}>
-                                                Cost: {upgrade.cost} 🪙
-                                            </p>
+                                            <button
+                                                onClick={() => handleUpgradePurchaseWithValidation(upgrade)}
+                                                disabled={!can_afford || is_maxed}
+                                                className="buy-btn"
+                                            >
+                                                {is_maxed ? 'Maxed' : 'Buy'}
+                                            </button>
                                         </div>
-
-                                        <button
-                                            onClick={() => handleUpgradePurchaseWithValidation(upgrade)}
-                                            disabled={!can_afford || is_maxed}
-                                            style={{
-                                                padding: '8px 16px',
-                                                backgroundColor: is_maxed ? '#ccc' : (can_afford ? '#3498db' : '#95a5a6'),
-                                                color: 'white',
-                                                border: 'none',
-                                                borderRadius: '4px',
-                                                cursor: is_maxed || !can_afford ? 'not-allowed' : 'pointer',
-                                                fontSize: '14px'
-                                            }}
-                                        >
-                                            {is_maxed ? 'Maxed' : 'Buy'}
-                                        </button>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })
+                        }
                     </div>
-                    </>
-                    )}
                 </div>
+            )}
         </div>
     );
 };

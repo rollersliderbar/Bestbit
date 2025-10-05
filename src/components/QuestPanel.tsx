@@ -1,10 +1,10 @@
 // FEATURE 3: Quest panel component 
-// basic quest sytem with rewards and stuff
+// quest system with rewards
 
 import React, { useState, useEffect } from 'react';
 
 
-//will need better quest logic later idk
+//will need better quest logic later
 
 interface Quest {
     id: number;
@@ -14,7 +14,6 @@ interface Quest {
     current: number;
     reward: number;
     completed: boolean;
-    //type: string; maybe later
 }
 
 interface QuestPanelProps {
@@ -36,33 +35,96 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
     const [quests, setQuests] = useState<Quest[]>([]);
     const [panel_open, setPanelOpen] = useState(true);
 
-    // hardcoded quests for now lol
+    // quest system with progressive difficulty
     const initial_quests: Quest[] = [
         {
             id: 1,
-            title: "First Steps",
-            description: "Collect 5 coins",
-            target: 5,
+            title: "Beginner's Fortune",
+            description: "Collect your first 10 coins to start your journey",
+            target: 10,
             current: 0,
-            reward: 10,
+            reward: 15,
             completed: false
         },
         {
             id: 2, 
-            title: "Click Master",
-            description: "Make 15 clicks",
-            target: 15,
+            title: "Click Apprentice",
+            description: "Click the coin button 20 times to prove your dedication",
+            target: 20,
             current: 0,
-            reward: 25,
+            reward: 30,
             completed: false
         },
         {
             id: 3,
-            title: "Coin Hoarder",
-            description: "Reach 50 coins",
+            title: "Coin Collector",
+            description: "Accumulate 75 coins in your treasury",
+            target: 75,
+            current: 0,
+            reward: 50,
+            completed: false
+        },
+        {
+            id: 4,
+            title: "Dedicated Clicker",
+            description: "Reach 50 total clicks to show your persistence",
             target: 50,
             current: 0,
-            reward: 100,
+            reward: 75,
+            completed: false
+        },
+        {
+            id: 5,
+            title: "Wealth Builder",
+            description: "Build your fortune to 200 coins",
+            target: 200,
+            current: 0,
+            reward: 150,
+            completed: false
+        },
+        {
+            id: 6,
+            title: "Century Clicker",
+            description: "Achieve the milestone of 100 clicks",
+            target: 100,
+            current: 0,
+            reward: 200,
+            completed: false
+        },
+        {
+            id: 7,
+            title: "Treasure Hunter",
+            description: "Amass a legendary hoard of 500 coins",
+            target: 500,
+            current: 0,
+            reward: 300,
+            completed: false
+        },
+        {
+            id: 8,
+            title: "Elite Clicker",
+            description: "Master the art with 250 total clicks",
+            target: 250,
+            current: 0,
+            reward: 400,
+            completed: false
+        },
+        {
+            id: 9,
+            title: "Coin Magnate",
+            description: "Build an empire worth 1,000 coins",
+            target: 1000,
+            current: 0,
+            reward: 750,
+            completed: false
+        },
+        {
+            id: 10,
+            title: "Legendary Clicker",
+            description: "Reach legendary status with 500 clicks",
+            target: 500,
+            current: 0,
+            reward: 1000,
             completed: false
         }
     ];
@@ -73,49 +135,31 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
     }, []);
 
     // update quest progress
-     useEffect(() => {
-        console.log("upfatinh quest progress based on stats");
+    useEffect(() => {
+        console.log("updating quest progress based on stats");
         console.log("coins: ", coin_count, "clicks: ", total_clicks);
-
 
 
 
 
         setQuests(prevQuests => 
             prevQuests.map(quest => {
-
-
                 let newCurrent = quest.current;
                 
-                // check questtype by desc (hacky lol)
+                // check quest type by description
                 if (quest.description.includes("clicks") || quest.description.includes("Click")) {
                     newCurrent = total_clicks;
-                } 
-                
-                
-                else {
-
-
-
+                } else {
                     newCurrent = coin_count;
                 }
 
                 const isCompleted = newCurrent >= quest.target && !quest.completed;
                 
                 if (isCompleted) {
-
-
-
-
-                    console.log("Quest completed!!!", quest.title);
+                    console.log("Quest completed!", quest.title);
                 }
 
                 return {
-
-
-
-
-
                     ...quest,
                     current: newCurrent,
                     completed: quest.completed || isCompleted
@@ -136,17 +180,13 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
         
 
 
-
         onRewardClaimed(quest.reward);
         
 
 
 
 
-
-
-
-                                 // mark as claimed (remove from list for now)
+        // mark as claimed and remove from list
         setQuests(prevQuests => 
             prevQuests.filter(q => q.id !== quest.id)
         );
@@ -157,22 +197,12 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
 
 
     return (
-        <div className="quest-panel" style={{
-            border: '2px solid #333',
-            padding: '15px',
-            margin: '20px 0',
-            backgroundColor: '#f9f9f9',
-            borderRadius: '8px'
-        }}>
+        <div className="quest-panel">
             <div className="quest-header">
-                <h3>Quests 📋</h3>
+                <h3 className="section-title">Epic Challenges</h3>
                 <button 
                     onClick={() => setPanelOpen(!panel_open)}
-                    style={{ 
-                        fontSize: '12px',
-                        padding: '5px 10px',
-                        marginLeft: '10px'
-                    }}
+                    className="toggle-btn"
                 >
                     {panel_open ? 'Hide' : 'Show'}
                 </button>
@@ -184,54 +214,42 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
 
 
 
-
-
-
-
-
             {panel_open && (
                 <div className="quest-list">
                     {quests.length === 0 ? (
-                        <p style={{ color: 'gray', fontStyle: 'italic' }}>
+                        <p className="empty-message">
                             No quests available right now
                         </p>
                     ) : (
                         quests.map(quest => (
                             <div 
                                 key={quest.id} 
-                                className="quest-item"
-                                style={{
-                                    border: '1px solid #ddd',
-                                    padding: '10px',
-                                    margin: '8px 0',
-                                    borderRadius: '5px',
-                                    backgroundColor: quest.completed ? '#e8f5e8' : '#fff'
-                                }}
+                                className={`quest-item ${quest.completed ? 'completed' : ''}`}
                             >
-                                <h4 style={{ margin: '0 0 5px 0' }}>{quest.title}</h4>
-                                <p style={{ margin: '0 0 8px 0', fontSize: '14px' }}>
+                                <h4 className="quest-item-title">{quest.title}</h4>
+                                <p className="quest-item-description">
                                     {quest.description}
                                 </p>
                                 
                                 <div className="quest-progress">
-                                    <span style={{ fontSize: '12px' }}>
-                                        Progress: {quest.current}/{quest.target}
+                                    <div className="progress-bar-container">
+                                        <div 
+                                            className="progress-bar-fill"
+                                            style={{
+                                                width: `${Math.min((quest.current / quest.target) * 100, 100)}%`
+                                            }}
+                                        ></div>
+                                    </div>
+                                    <span className="progress-text">
+                                        {quest.current}/{quest.target}
                                     </span>
                                     
                                     {quest.completed && (
                                         <button
                                             onClick={() => handleClaimReward(quest)}
-                                            style={{
-                                                marginLeft: '10px',
-                                                padding: '5px 15px',
-                                                backgroundColor: '#4CAF50',
-                                                color: 'white',
-                                                border: 'none',
-                                                borderRadius: '3px',
-                                                cursor: 'pointer'
-                                            }}
+                                            className="claim-btn"
                                         >
-                                            Claim {quest.reward} coins! 🎉
+                                            Claim {quest.reward.toLocaleString()} coins
                                         </button>
                                     )}
                                 </div>
@@ -245,27 +263,12 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
 
 
 
-
-
             {/* debug quest info */}
-            <p style={{ fontSize: '10px', color: 'gray', marginTop: '10px' }}>
+            <p className="debug-info">
                 Debug: Active quests = {quests.length}
             </p>
         </div>
-
-
-
-
-
-
-
     );
-
-
-
-
-
-
 };
 
 
