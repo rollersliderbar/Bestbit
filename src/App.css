@@ -1,4 +1,8 @@
-/* spent way too long on this css lol but it looks sick now */
+
+
+
+
+
 /* trying to make everything look good with gradients and stuff */
 
 * {
@@ -8,8 +12,13 @@
 }
 
 
-/* main container for the whole game */
-/* centered everything cuz it looks better that way */
+
+
+
+
+
+
+
 .coin-quest-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -18,7 +27,17 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
-/* header with title and buttons at top */
+
+
+
+
+
+
+
+
+
+
+
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -27,6 +46,17 @@
   padding-bottom: 20px;
   border-bottom: 3px solid rgba(255, 255, 255, 0.1);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* title with purple gradient, looks pretty cool ngl */
 .quest-title {
@@ -41,7 +71,17 @@
 }
 
 
-/* save and reset buttons */
+
+
+
+
+
+
+
+
+
+
+
 .game-controls {
   display: flex;
   gap: 12px;
@@ -59,6 +99,23 @@
   letter-spacing: 0.5px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* purple gradient for save button */
 .save-btn {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -70,11 +127,39 @@
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
 
-/* pink gradient for reset, wanted it to look dangerous lol */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .reset-btn {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
 }
+
+
+
+
+
+
+
+
 
 .reset-btn:hover {
   transform: translateY(-2px);
@@ -83,7 +168,15 @@
 
 
 
-/* player name input area */
+
+
+
+
+
+
+
+
+
 /* added glassmorphism effect here, took a while to get right */
 .player-setup {
   background: rgba(255, 255, 255, 0.05);
@@ -95,10 +188,35 @@
   transition: all 0.3s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 .player-setup:hover {
   border-color: rgba(102, 126, 234, 0.5);
   box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 .section-title {
   font-size: 24px;
@@ -109,11 +227,32 @@
   letter-spacing: 1px;
 }
 
+
+
+
+
+
+
+
+
+
+
 .name-input-wrapper {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .input-label {
   font-size: 14px;
@@ -122,6 +261,17 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .player-name-input {
   padding: 14px 18px;
@@ -135,15 +285,50 @@
   max-width: 400px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 .player-name-input:focus {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 .player-name-input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
+
+
+
+
+
+
+
+
+
+
 
 .player-display {
   margin-top: 15px;
@@ -151,10 +336,32 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+
+
+
+
+
+
+
+
+/* used a little ai for help*/
+
+
+
+
 .player-display strong {
   color: #667eea;
   font-weight: 700;
 }
+
+
+
+
+
+
+
+
+
 
 /* Confirm name button */
 .confirm-name-btn {
@@ -206,6 +413,18 @@
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 .welcome-message {
   font-size: 18px;
   color: rgba(255, 255, 255, 0.9);
@@ -221,7 +440,13 @@
 }
 
 /* big coin counter section in the middle */
-/* used gradients everywhere cuz they look sick */
+
+
+
+
+
+
+
 .coin-display-section {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   backdrop-filter: blur(10px);
@@ -233,10 +458,33 @@
   transition: all 0.3s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 .coin-display-section:hover {
   border-color: rgba(102, 126, 234, 0.5);
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* "treasury balance" text at top */
 .coin-header {
@@ -248,6 +496,15 @@
   letter-spacing: 2px;
 }
 
+
+
+
+
+
+
+
+
+
 .coin-counter {
   margin: 30px 0;
   display: flex;
@@ -256,8 +513,43 @@
   gap: 15px;
 }
 
-/* the actual coin number display */
-/* made it huge cuz its the most important thing lol */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .coin-amount {
   font-size: 72px;
   font-weight: 900;
@@ -359,8 +651,22 @@
   transform: translateY(-2px);
 }
 
+
+
+
+
+
+
+
+
+
 /* quest panel section with cyan color theme */
-/* used cyan cuz it stands out from the purple */
+
+
+
+
+
+
 .quest-panel {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -387,6 +693,11 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+
+
+
+
+
 .toggle-btn {
   padding: 8px 16px;
   font-size: 12px;
@@ -401,6 +712,10 @@
   letter-spacing: 0.5px;
 }
 
+
+
+
+
 .toggle-btn:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -414,6 +729,14 @@
   gap: 15px;
 }
 
+
+
+
+
+
+
+
+
 .quest-item {
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(92, 225, 230, 0.2);
@@ -422,16 +745,44 @@
   transition: all 0.3s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
 .quest-item:hover {
   border-color: rgba(92, 225, 230, 0.5);
   transform: translateX(5px);
   box-shadow: 0 4px 15px rgba(92, 225, 230, 0.2);
 }
 
+
+
+
+
+
+
+
+
+
 .quest-item.completed {
   background: rgba(92, 225, 230, 0.1);
   border-color: rgba(92, 225, 230, 0.5);
 }
+
+
+
+
+
+
+
+
+
 
 .quest-item-title {
   font-size: 18px;
@@ -440,11 +791,34 @@
   margin-bottom: 10px;
 }
 
+
+
+
+
+
+
+
+
+
+
 .quest-item-description {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 15px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .quest-progress {
   display: flex;
@@ -452,8 +826,18 @@
   gap: 10px;
 }
 
-/* progress bar for quests */
-/* animated fill looks sick when u complete stuff */
+
+
+
+
+
+
+
+
+
+
+
+
 .progress-bar-container {
   width: 100%;
   height: 8px;
@@ -557,6 +941,14 @@
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+
+
+
+
+
+
+
+
 .upgrade-content,
 .generator-content {
   display: flex;
@@ -598,6 +990,12 @@
   margin-bottom: 10px;
 }
 
+
+
+
+
+
+
 .upgrade-cost,
 .generator-cost {
   font-size: 14px;
@@ -605,10 +1003,29 @@
   margin-bottom: 5px;
 }
 
+
+
+
+
+
+
+
+
+
+
 .upgrade-cost.affordable,
 .generator-cost.affordable {
   color: #38ef7d;
 }
+
+
+
+
+
+
+
+
+
 
 .upgrade-cost.expensive,
 .generator-cost.expensive {
@@ -630,10 +1047,32 @@
   white-space: nowrap;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 .buy-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .buy-btn:disabled {
   opacity: 0.4;
@@ -642,7 +1081,17 @@
 }
 
 /* passive income generators panel */
-/* purple theme for this one */
+
+
+
+
+
+
+
+
+
+
+
 .passive-income-panel {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -757,6 +1206,19 @@
   transform: scale(1.1);
   box-shadow: 0 12px 40px rgba(255, 215, 0, 0.7);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes popupBounce {
   0%, 100% {
@@ -883,11 +1345,25 @@
 
 /* mobile responsive stuff */
 /* had to make everything smaller for phones */
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 768px) {
   .coin-quest-container {
     padding: 20px 15px;
   }
 
+
+  
   .header-section {
     flex-direction: column;
     gap: 20px;

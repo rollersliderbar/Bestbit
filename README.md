@@ -56,7 +56,7 @@ src/
 5. buy generators for passive income
 6. watch ur empire grow lol
 
-
+.
 
 ## features breakdown
 
