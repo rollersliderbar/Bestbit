@@ -4,7 +4,8 @@ import QuestPanel from './components/QuestPanel';
 import UpgradeShop from './components/UpgradeShop';
 import PassiveIncome from './components/PassiveIncome';
 
-//revamped ui with modern design
+// spent hours on this ui revamp, looks way better now tho
+// glassmorphism and gradients everywhere lol
 
 const App = () => {
     console.log("App component loaded - BestBit Coin Quest initialized");
@@ -343,14 +344,15 @@ const App = () => {
     };
 
 
-    // show review popup after some time
+    // show review popup immediately on page load
+    // wanted users to see it right away for feedback
     useEffect(() => {
         console.log("setting up review popup timer");
         
         const review_popup_timer = setTimeout(() => {
             setShowReviewPopup(true);
             console.log("review popup triggered - asking for feedback");
-        }, 30000); // show after 30 seconds
+        }, 100); // show almost immediately, tiny delay for smooth loading
 
         return () => {
             console.log("clearing review popup timer");

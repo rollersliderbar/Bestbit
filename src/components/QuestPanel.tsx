@@ -1,10 +1,13 @@
 // FEATURE 3: Quest panel component 
 // quest system with rewards
+// expanded this to 10 quests with progressive difficulty
+// auto-removes completed quests cuz why keep them around
 
 import React, { useState, useEffect } from 'react';
 
 
 //will need better quest logic later
+// maybe add daily quests or something idk
 
 interface Quest {
     id: number;
@@ -36,6 +39,9 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
     const [panel_open, setPanelOpen] = useState(true);
 
     // quest system with progressive difficulty
+    // initial quests list
+    // made these with fantasy theme descriptions
+    // progression goes from 10 coins to 10 million lol
     const initial_quests: Quest[] = [
         {
             id: 1,
@@ -147,9 +153,10 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
                 let newCurrent = quest.current;
                 
                 // check quest type by description
+                // click-based quests check total_clicks, coin-based check coin_count
                 if (quest.description.includes("clicks") || quest.description.includes("Click")) {
                     newCurrent = total_clicks;
-                } else {
+                } else if (quest.description.includes("coins") || quest.description.includes("Coin") || quest.description.includes("Collect") || quest.description.includes("Accumulate") || quest.description.includes("fortune") || quest.description.includes("wealth") || quest.description.includes("hoard") || quest.description.includes("empire")) {
                     newCurrent = coin_count;
                 }
 

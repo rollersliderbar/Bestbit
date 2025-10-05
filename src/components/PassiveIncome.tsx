@@ -34,7 +34,10 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
 }) => {
     console.log("PassiveIncome component loaded");
     
-    const [generators, setGenerators] = useState<PassiveGenerator[]>([
+    // generator definitions
+    // each one produces coins per second
+    // cost increases by 1.5x each time u buy one
+    const initial_generators: PassiveGenerator[] = [
         {
             id: 1,
             name: "Apprentice Miner",
@@ -67,8 +70,9 @@ const PassiveIncome: React.FC<PassiveIncomeProps> = ({
             coins_per_second: 15,
             owned: 0
         }
-    ]);
+    ];
 
+    const [generators, setGenerators] = useState<PassiveGenerator[]>(initial_generators);
     const [panel_open, setPanelOpen] = useState(true);
     const [total_coins_per_sec, setTotalCoinsPerSec] = useState(0);
 
