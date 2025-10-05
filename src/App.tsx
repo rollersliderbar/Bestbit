@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import QuestPanel from './components/QuestPanel';
+import UpgradeShop from './components/UpgradeShop';
+import PassiveIncome from './components/PassiveIncome';
 
 //awill add proper styling later mybe
 
@@ -10,7 +13,7 @@ const App = () => {
     const [coin_count, setCoinCount] = useState(0);
     const [game_loaded, setGameLoaded] = useState(false);
     const [total_clicks, setTotalClicks] = useState(0);
-
+    const [coin_per_click, setCoinPerClick] = useState(0);
     // saving const [player, setplayer] = useState({name: '', coins: 0})
         // consyt [coin_per_click] = useState(1);\
 
@@ -48,6 +51,43 @@ const App = () => {
 
         const inputValue = event.target.value;
         console.log('input value:', inputValue);
+
+
+
+
+ 
+
+                        //auto save to nat lose prtogrss
+
+
+
+
+
+                          // auto-save game state every 5 seconds
+    useEffect(() => {
+                                    console.log("setting up autosave interval");
+        
+                                const save_interval = setInterval(() => {
+                                    const game_state = {
+                                                                     playerName,
+                                                                     coin_count,
+                                                                     total_clicks,
+                                                                     coin_per_click,
+                                                                    timestamp: Date.now()
+            };  
+            
+            localStorage.setItem('bestbit_coin_quest_save', JSON.stringify(game_state));
+            console.log("game auto-saved");
+        }, 5000); // save every 5 sec
+
+        return () => {
+            console.log("clearing autosave interval");
+            clearInterval(save_interval);
+        };
+    }, [playerName, coin_count, total_clicks, coin_per_click]);
+
+
+
 
 
 
@@ -100,10 +140,11 @@ const App = () => {
 
 
             console.log("coin click detected");
+            console.log("coins per click: ", coin_per_click);
 
 
 
-            //u[pdate coin count
+            //u[pdate coin count with bonus
             
         
         const new_coin_count = coin_count + 1;
@@ -113,7 +154,7 @@ const App = () => {
 
         //tracks clicks and saves
 
-        const new_click_count = coin_count + 1;
+        const new_click_count = total_clicks + 1;
         setTotalClicks(new_click_count);
         console.log("total click: ", new_click_count);
 
@@ -124,10 +165,280 @@ const App = () => {
         //maybe will add more sound effect, like jhing jhing or smt
         }
 
+
+    // quest reward handler functio
+    const handleQuestRewardWithBonusCalculation = (reward: number) => {
+        console.log("quest reward received:", reward);
+        
+        
+        
+        // add reward to coinz
+        const new_coin_total = coin_count + reward;
+        setCoinCount(new_coin_total);
+        console.log("coins updated with quest reward from", coin_count, "to", new_coin_total);
+        
+        
+        
+      
+        //  maybe show popup or smt
+    };
+
+
+    
+
+
+
+
+
+
+
+
+
+
+    //upgrade purchase handler
+
+
+
+
+const handleUpgradePurchaseAndUpdateStats = (cost: number, upgrade_id: number) => {
+        console.log("upgrade purchase handler called");
+        console.log("cost:", cost, "upgrade id:", upgrade_id);
+
+
+
+
+
+
+
+        ///deduct coinz
+
+
+
+
+
+        const new_coin_amount = coin_count - cost;
+
+        setCoinCount(new_coin_amount);
+
+        console.log("coins after purchase", new_coin_amount);
+
+
+
+
+        //increase coin per click
+
+
+
+
+        let bonus_amount = 0;
+        if (upgrade_id===1){
+            bonus_amount =1;
+
+        } else if (upgrade_id===2){
+            bonus_amount=1;
+        } else if(upgrade_id===3){
+            bonus_amount =3;
+        }
+
+        const new_coin_per_click = coin_per_click + bonus_amount;
+        setCoinPerClick(new_coin_per_click);
+        console.log("coin per click updated: ", coin_per_click, "----> ", new_coin_per_click)
+
+    };
+
+
+
+
+
+
+
+
+
+            //PASSIVE earling handler
+
+          const handlePassiveEarningsFromGenerators = (amount: number) => {
+        console.log("passive earnings received:", amount);
+        
+        
+        
+        const new_total = coin_count + amount;
+        setCoinCount(new_total);
+        
+     
+    };
+
+
+                    ///.. genberate urchase handlr 
+
+                    const handleGeneratorPurchaseWithDeduction = (cost: number, generator_id: number) => {
+                         console.log("buying generator id:", generator_id);
+                         console.log("cost:", cost);
+        
+
+
+
+
+
+
+
+                         // deduct coin
+
+
+                         const new_amount = coin_count -cost;
+                         setCoinCount(new_amount);
+                         console.log("coins aftergenerator purchase: ", new_amount);
+
+
+                    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                const handleManualSaveWithConfirmation = () => {
+
+                                    console.log("Manual save triggered");
+
+
+
+                                    const game_state = {
+
+                                        playerName,
+                                        coin_count,
+                                        total_clicks,
+                                        coin_per_click,
+                                        timestamp: Date.now()
+                                    };
+
+
+
+
+
+                                  localStorage.setItem('bestbit_coin_quest_save', JSON.stringify(game_state));
+                                                                                         console.log("game saved manually");
+                                                                             alert("Game saved!");
+    };  
+
+
+
+
+
+
+
+                                            //reset game functio
+
+
+
+
+                                            const handleResetGameWithWarning = () => {
+
+
+                                                console.log('Reset game requested');
+                                                const confirm = window.confirm("Are you sure you want to reset? no taksies backsies");
+
+                                                if(confirm) {
+                                                    console.log("resetting hgame....");
+
+
+
+                                                    setPlayerName('');
+                                                    setCoinCount(0);
+                                                    setTotalClicks(0);
+                                                    setCoinPerClick(1);
+
+
+                                                                                        localStorage.removeItem('bestbit_coin_quest_save');
+                                                                                                    console.log("game reset complete");
+                                                                                                    
+                                                                                                    alert("Game reset!");
+                                                                                                } else {
+                                                                                                    console.log("reset cancelled");
+                                                                                                }
+                                                                                            };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // render the damn thing
-    return (
-        <div className="coin-quest-container main">
-            <h1 className='quest-title big'>BestBit Coin Quest</h1>
+   return (
+        <div className="coin-quest-container main" style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            padding: '20px',
+            backgroundColor: '#fafafa',
+            minHeight: '100vh'
+        }}>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '20px',
+                borderBottom: '3px solid #333',
+                paddingBottom: '10px'
+            }}>
+                <h1 className='quest-title big' style={{ margin: 0 }}>BestBit Coin Quest</h1>
+                
+                <div className="game-controls" style={{ display: 'flex', gap: '10px' }}>
+                    <button 
+                        onClick={handleManualSaveWithConfirmation}
+                        style={{
+                            padding: '8px 15px',
+                            backgroundColor: '#3498db',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                        }}
+                    >
+                        💾 Save
+                    </button>
+                    
+                    <button 
+                        onClick={handleResetGameWithWarning}
+                        style={{
+                            padding: '8px 15px',
+                            backgroundColor: '#e74c3c',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                        }}
+                    >
+                        🔄 Reset
+                    </button>
+                </div>
+            </div>
+
+
+
+
+
+
+            {/* added css lol*/}
 
             <div className='player-setup section'>
                 <h2>Player Setup</h2>
@@ -219,6 +530,50 @@ const App = () => {
 
 
 
+            {/* quest systme panel */}
+            <QuestPanel 
+                coin_count={coin_count}
+                total_clicks={total_clicks}
+                onRewardClaimed={handleQuestRewardWithBonusCalculation}
+            />
+
+
+
+
+
+
+
+                        {/*ugrade shop area*/}
+
+
+                        <UpgradeShop
+                                    coin_count={coin_count}
+                                    onPurchase={handleUpgradePurchaseAndUpdateStats}
+                                    current_coin_per_click={coin_per_click}
+                                    />
+
+
+
+
+
+
+
+
+
+
+                                     {/* pasive income area */}
+
+
+
+
+
+
+            <PassiveIncome
+                coin_count={coin_count}
+                onPassiveEarnings={handlePassiveEarningsFromGenerators}
+                onGeneratorPurchase={handleGeneratorPurchaseWithDeduction}
+                />
+
 
 
             {!game_loaded && (
@@ -231,4 +586,5 @@ const App = () => {
 };
 
 export default App;
+
 

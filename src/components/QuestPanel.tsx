@@ -73,14 +73,80 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
     }, []);
 
     // update quest progress
-     
+     useEffect(() => {
+        console.log("upfatinh quest progress based on stats");
+        console.log("coins: ", coin_count, "clicks: ", total_clicks);
+
+
+
+
+
+        setQuests(prevQuests => 
+            prevQuests.map(quest => {
+
+
+                let newCurrent = quest.current;
+                
+                // check questtype by desc (hacky lol)
+                if (quest.description.includes("clicks") || quest.description.includes("Click")) {
+                    newCurrent = total_clicks;
+                } 
+                
+                
+                else {
+
+
+
+                    newCurrent = coin_count;
+                }
+
+                const isCompleted = newCurrent >= quest.target && !quest.completed;
+                
+                if (isCompleted) {
+
+
+
+
+                    console.log("Quest completed!!!", quest.title);
+                }
+
+                return {
+
+
+
+
+
+                    ...quest,
+                    current: newCurrent,
+                    completed: quest.completed || isCompleted
+                };
+            })
+        );
+    }, [coin_count, total_clicks]);
+
+
+
+
+
+
+
 
     const handleClaimReward = (quest: Quest) => {
         console.log("claiming reward for quest:", quest.title);
         
+
+
+
         onRewardClaimed(quest.reward);
         
-        // mark as claimed (remove from list for now)
+
+
+
+
+
+
+
+                                 // mark as claimed (remove from list for now)
         setQuests(prevQuests => 
             prevQuests.filter(q => q.id !== quest.id)
         );
@@ -175,12 +241,33 @@ const QuestPanel: React.FC<QuestPanelProps> = ({ coin_count, total_clicks, onRew
                 </div>
             )}
 
+
+
+
+
+
+
             {/* debug quest info */}
             <p style={{ fontSize: '10px', color: 'gray', marginTop: '10px' }}>
                 Debug: Active quests = {quests.length}
             </p>
         </div>
+
+
+
+
+
+
+
     );
+
+
+
+
+
+
 };
+
+
 
 export default QuestPanel;
